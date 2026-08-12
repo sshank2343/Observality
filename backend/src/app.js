@@ -1,28 +1,29 @@
-const express = require('express')
+const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+
 const config = require('./config');
-const healthRoutes = require('./modules/health/health.routes'); 
+const healthRoutes = require('./modules/health/health.routes');
+const authRoutes = require('./modules/auth/auth.routes');
+const projectRoutes = require('./modules/projects/project.routes');
+const { errorHandler } = require('./middleware/errorHandler.middleware');
 
-
-
-const app =express();
+const app = express();
 
 app.use(helmet());
-app.use(cors({origin: config.frontendUrl, credentials:true}));
-app.use(express.json({limit:'5mb'}))
-app.use(morgan(config.nodeEnv === 'developmet'?'dev':'combined'));
+app.use(cors({ origin: config.frontendUrl, credentials: true }));
+app.use(express.json({ limit: '5mb' }));
+app.use(morgan(config.nodeEnv === 'development' ? 'dev' : 'combined'));
 
-app.use('/health',healthRoutes)
+app.use('/health', healthRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/projects', projectRoutes);
 
-app.use((req,res) => {
-    res.status(404).json({error : 'Not Found'})
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not found' });
 });
 
-app.use((err,req,res,next) => {
-    console.error(err);
-    res.status(err.status || 500).json({error : err.message || 'Internal Server Error'})
-});
+app.use(errorHandler);
 
-module.exports=app;
+module.exports = app;
