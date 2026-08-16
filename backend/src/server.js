@@ -4,6 +4,7 @@ const { connectMongo } = require('./db/mongoose/connection');
 const { redisClient } = require('./db/redis/connection');
 const { prisma } = require('./config/postgres.config');
 const { attachWebSocket } = require('./websocket');
+const { initJobs } = require('./jobs/scheduler');
 
 const startServer = async () => {
   await connectMongo();
@@ -16,6 +17,8 @@ const startServer = async () => {
 
   attachWebSocket(server);
   console.log('WebSocket server attached at /ws');
+
+  await initJobs();
 
   process.on('SIGTERM', async () => {
     console.log('SIGTERM received, shutting down gracefully');
