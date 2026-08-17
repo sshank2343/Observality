@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "observability-sdk"
+version = "0.1.0"
+description = "Lightweight LLM observability SDK for tracing cost, latency, and quality"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "Shashank Verma", email = "[EMAIL_ADDRESS]" }
+]
+dependencies = [
+    "httpx>=0.24"
+]
+
+[project.urls]
+Homepage = "https://github.com/sshank2343/Observality"
+Repository = "https://github.com/sshank2343/Observality"
+
+[tool.setuptools.packages.find]
+include = ["observability_sdk*"]
