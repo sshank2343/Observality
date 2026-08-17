@@ -64,13 +64,14 @@ model ApiKey {
 
 
 model AlertRule {
-  id        String   @id @default(uuid())
-  projectId String
-  metric    String   // e.g. "latency", "cost", "error_rate"
-  condition String   // e.g. "gt", "lt"
-  threshold Float
-  channel   String   // e.g. "slack", "email", "webhook"
-  createdAt DateTime @default(now())
+  id            String   @id @default(uuid())
+  projectId     String
+  metric        String   // "latency" | "cost" | "error_rate" | "request_volume"
+  condition     String   // "gt" | "lt"
+  threshold     Float
+  channel       String   // "slack" | "email" | "webhook"
+  channelTarget String   // webhook URL, email address, etc.
+  createdAt     DateTime @default(now())
 
   @@map("alert_rules")
 }
@@ -87,4 +88,5 @@ model HourlyMetric {
   @@unique([projectId, hour])
   @@map("hourly_metrics")
 }
+
 
