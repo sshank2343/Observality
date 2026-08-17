@@ -25,7 +25,9 @@ dist/
 build/
 .pytest_cache/
 *.egg
-
+sdk/test_manual.py
+sdk/test_openai_auto.py
+sdk/test_auto_instrument.py
 # ===== Prisma =====
 backend/src/db/prisma/migrations/dev.db
 
