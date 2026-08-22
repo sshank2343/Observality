@@ -9,7 +9,9 @@ const { initJobs } = require('./jobs/scheduler');
 const startServer = async () => {
   await connectMongo();
   await redisClient.ping();
+  console.log('Connecting PostgreSQL via Prisma...');
   await prisma.$connect();
+  console.log('PostgreSQL connected');
 
   const server = app.listen(config.port, () => {
     console.log(`Backend running on http://localhost:${config.port} [${config.nodeEnv}]`);

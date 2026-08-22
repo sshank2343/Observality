@@ -14,7 +14,7 @@ const  runRetentionCleanup = async({projectId, retentionDays}) => {
         createdAt: { $lt: cutoff },
     });
 
-    console.log(`Retention cleanup: deleted ${result.deleteCount} traces for project ${projectId}`);
+    console.log(`Retention cleanup: deleted ${result.deletedCount} traces for project ${projectId}`);
     return result.deletedCount;
 };
 

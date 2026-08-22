@@ -4,6 +4,8 @@ const { Queue, Worker } = require('bullmq');
 
 const connection = {
     url: config.redisUrl,
+    maxRetriesPerRequest: null,
+    enableReadyCheck: false,
 };
 
 const QUEUE_NAMES = {

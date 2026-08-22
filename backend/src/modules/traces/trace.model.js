@@ -36,7 +36,7 @@ const traceSchema = new mongoose.Schema({
     evaluatedAt: { type: Date, default: null },
   },
 
-  createdAt: { type: Date, default: Date.now, index: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
 traceSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 30 });
