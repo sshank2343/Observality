@@ -1,4 +1,3 @@
-// $ per 1,000 tokens. Update as providers change pricing.
 const PRICING = {
   openai: {
     'gpt-4o': { input: 0.005, output: 0.015 },
@@ -16,7 +15,16 @@ const PRICING = {
 };
 
 const getPricing = (provider, model) => {
-  return PRICING[provider]?.[model] || null;
+  const providerTable = PRICING[provider];
+  if (!providerTable) return null;
+
+  // Exact match first
+  if (providerTable[model]) return providerTable[model];
+
+  // Fall back to prefix match — handles versioned model names like
+  // "gpt-4o-mini-2024-07-18" matching the "gpt-4o-mini" entry
+  const matchedKey = Object.keys(providerTable).find((key) => model.startsWith(key));
+  return matchedKey ? providerTable[matchedKey] : null;
 };
 
 module.exports = { getPricing };
